@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Order History</h2>
+
+    {% if orders and orders|length > 0 %}
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price (per item)</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ order[0] }}</td>
+                    <td>{{ order[1] }}</td>
+                    <td>${{ "%.2f"|format(order[2]) }}</td>
+                    <td>${{ "%.2f"|format(order[3]) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif message %}
+        <div class="alert alert-danger text-center">{{ message }}</div>
+    {% else %}
+        <div class="alert alert-warning text-center">You have no orders yet.</div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

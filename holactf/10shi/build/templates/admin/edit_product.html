@@ -1,0 +1,45 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center">Edit Product</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="/admin/edit_product/{{ product[0] }}" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" name="name" class="form-control" 
+                           value="{{ product[1] }}" placeholder="Enter product name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Price ($)</label>
+                    <input type="number" step="0.01" name="price" class="form-control" 
+                           value="{{ product[2] }}" placeholder="Enter price" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Current Image</label><br>
+                    <img src="{{ product[3] }}" class="card-img-top" width="150" height="150" alt="Product Image">
+                    
+                    <label class="form-label">Upload New Image (optional)</label>
+                    <input type="file" name="uploaded_image" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3" 
+                              placeholder="Enter product description">{{ product[4] }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </form>
+
+            {% if message %}
+                <div class="alert alert-danger text-center mt-3">{{ message }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

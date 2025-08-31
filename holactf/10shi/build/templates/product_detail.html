@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% if result %}
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="{{ result[3] }}" class="img-fluid rounded" alt="Product Image"
+                     style="max-width: 80%; height: auto; object-fit: contain;">
+            </div>
+
+            <div class="col-md-6">
+                <h2>{{ result[1] }}</h2>
+                <h4 class="text-danger">${{ result[2] }}</h4>
+                <p>{{ result[4] }}</p>
+
+                <form action="/buy_product" method="POST">
+                    <input type="hidden" name="product_id" value="{{ result[0] }}">
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity:</label>
+                        <input type="number" id="quantity" name="number" class="form-control w-25" value="1" min="1">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Buy Now</button>
+                    <a href="/dashboard" class="btn btn-outline-secondary">Back to Products</a>
+                </form>
+
+                {% if message %}
+                    <div class="alert alert-info mt-3">{{ message }}</div>
+                {% endif %}
+            </div>
+        {% else %}
+            <h2 class="text-center">Product id is not valid</h2>
+            <a href="/dashboard" class="btn btn-primary d-block mx-auto" style="width: 200px;">Back to Products</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

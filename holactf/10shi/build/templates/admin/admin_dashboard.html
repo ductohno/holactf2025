@@ -1,0 +1,47 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User manager</h2>
+
+    {% if users and users|length > 0 %}
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Money</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Avatar storaged</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ "%.2f"|format(user[3]) }}$</td>
+                    <td>{{ user[4] }}</td>
+                    <td>{{ user[5] }}</td>
+                    <td>{{ user[6] }}</td>
+                    <td>{{ user[7] }}</td>
+                    <td>
+                        <a href="/admin/profile/{{user[1]}}" class="btn btn-info btn-sm">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif message %}
+        <div class="alert alert-danger text-center">{{ message }}</div>
+    {% else %}
+        <div class="alert alert-warning text-center">No users yet.</div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

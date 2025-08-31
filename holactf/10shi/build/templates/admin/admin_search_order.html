@@ -1,0 +1,77 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Order History</h2>
+    {% if category and search_text %}
+        {% if category == "username" %}
+            <h3 class="text-center mb-4">All product of {{search_text}}</h3>
+                {% if orders and orders|length > 0 %}
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price (per item)</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>${{ "%.2f"|format(order[2]) }}</td>
+                                <td>${{ "%.2f"|format(order[3]) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% elif message %}
+                    <div class="alert alert-danger text-center">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-warning text-center">No orders exist.</div>
+                {% endif %}
+        {% elif category == "product" %}
+            <h3 class="text-center mb-4">All user buy {{search_text}}</h3>
+                {% if orders and orders|length > 0 %}
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Quantity</th>
+                                <th>Price (per item)</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>${{ "%.2f"|format(order[2]) }}</td>
+                                <td>${{ "%.2f"|format(order[3]) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% elif message %}
+                    <div class="alert alert-danger text-center">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-warning text-center">No orders exist.</div>
+                {% endif %}
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning text-center">No argument, see all order here.</div>
+        <div class="text-center mt-3">
+            <a href="/admin/order_history" class="btn btn-primary">Order history</a>
+        </div>
+    {% endif %}
+    <div class="text-center mt-3">
+        <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

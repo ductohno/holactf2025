@@ -1,0 +1,40 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Order History</h2>
+    {% if orders and orders|length > 0 %}
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price (per item)</th>
+                    <th>Total Price</th>
+                    <th>By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order[0] }}</td>
+                    <td>{{ order[2] }}</td>
+                    <td>{{ order[3] }}</td>
+                    <td>${{ "%.2f"|format(order[4]) }}</td>
+                    <td>${{ "%.2f"|format(order[5]) }}</td>
+                    <td>{{ order[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif message %}
+        <div class="alert alert-danger text-center">{{ message }}</div>
+    {% else %}
+        <div class="alert alert-warning text-center">No orders exist.</div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
